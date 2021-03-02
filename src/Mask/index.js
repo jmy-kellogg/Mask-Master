@@ -63,7 +63,7 @@ const Mask = (props) => {
         <IconButton
           onClick={() => handleDelete(mask.uuid)}
           aria-label="delete"
-          color="primary"
+          color={isExpired ? "secondary" : "primary"}
         >
           <DeleteIcon />
         </IconButton>

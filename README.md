@@ -1,10 +1,32 @@
-# Getting Started with Create React App
+# About Mask Master App
+
+This app is to help keep track of FFR Mask Usage.
+According to government advice masks can safely be used to up to 5 times with a 7 day drying period in between.
+The Mask Master App allows users to mark when a masked is used and track when a mask is ready to be used again.
+
+https://www.cdc.gov/coronavirus/2019-ncov/hcp/ppe-strategy/decontamination-reuse-respirators.html
+
+# Getting Started with Mask Master App
+
+The database tables queries can be found in /server/database.sql
+Add a .env file with
+
+```
+DB_USER = ""
+DB_PASSWORD = ""
+```
+
+After installing packages `yarn install` run `yarn dev` to begin developing locally
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `yarn dev`
+
+Starts server and client
 
 ### `yarn start`
 
@@ -13,6 +35,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
+
+### `yarn server`
+
+Runs server using nodemon on port 5000
 
 ### `yarn test`
 
