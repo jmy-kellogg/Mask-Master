@@ -31,7 +31,6 @@ function App() {
 
   return (
     <div className={classes.app}>
-      <Sidebar fetchUsers={fetchUsers} users={users} />
       <Main fetchUsers={fetchUsers} users={users} />
     </div>
   );

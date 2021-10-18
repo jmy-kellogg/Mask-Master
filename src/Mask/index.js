@@ -11,7 +11,7 @@ const Mask = (props) => {
   const [mask, setMask] = useState(props.mask);
 
   const lastUsed = mask.lastUsed && moment(mask.lastUsed);
-  const nextTimeToUse = moment(mask.lastUsed).add(7, "days");
+  const nextTimeToUse = moment(mask.lastUsed).add(5, "days");
   const isExpired = parseInt(mask.timesUsed) > 4;
   const isDirty = moment()
     .startOf("day")
@@ -74,9 +74,6 @@ const Mask = (props) => {
           color="primary"
         >
           <HowToRegIcon />
-        </IconButton>
-        <IconButton disabled aria-label="edit" color="primary">
-          <CreateIcon />
         </IconButton>
       </TableCell>
     </TableRow>
