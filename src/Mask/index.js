@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import moment from "moment";
-import CreateIcon from "@material-ui/icons/Create";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import HowToRegIcon from "@material-ui/icons/HowToReg";
@@ -60,21 +59,24 @@ const Mask = (props) => {
         {lastUsed && nextTimeToUse.format("MMM DD")}
       </TableCell>
       <TableCell align="right">
-        <IconButton
-          onClick={() => handleDelete(mask.uuid)}
-          aria-label="delete"
-          color={isExpired ? "secondary" : "primary"}
-        >
-          <DeleteIcon />
-        </IconButton>
-        <IconButton
-          disabled={isExpired || isDirty}
-          onClick={markAsUsed}
-          aria-label="add"
-          color="primary"
-        >
-          <HowToRegIcon />
-        </IconButton>
+        {isExpired ? (
+          <IconButton
+            onClick={() => handleDelete(mask.uuid)}
+            aria-label="delete"
+            color={isExpired ? "secondary" : "primary"}
+          >
+            <DeleteIcon />
+          </IconButton>
+        ) : (
+          <IconButton
+            disabled={isDirty}
+            onClick={markAsUsed}
+            aria-label="add"
+            color="primary"
+          >
+            <HowToRegIcon />
+          </IconButton>
+        )}
       </TableCell>
     </TableRow>
   );

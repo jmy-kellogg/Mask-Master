@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Sidebar from "../Sidebar";
 import Main from "../Main";
 
 const useStyles = makeStyles({
