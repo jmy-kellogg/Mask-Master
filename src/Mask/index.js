@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import moment from "moment";
-import DeleteIcon from "@material-ui/icons/Delete";
-import IconButton from "@material-ui/core/IconButton";
-import HowToRegIcon from "@material-ui/icons/HowToReg";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
+import { IconButton, TableCell, TableRow } from "@mui/material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const Mask = (props) => {
   const [mask, setMask] = useState(props.mask);
@@ -74,7 +72,7 @@ const Mask = (props) => {
             aria-label="add"
             color="primary"
           >
-            <HowToRegIcon />
+            <CheckCircleOutlineIcon />
           </IconButton>
         )}
       </TableCell>

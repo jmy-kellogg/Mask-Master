@@ -1,17 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useEffect, useState } from "react";
+import { Card } from "@mui/material";
 
-import Main from "../Main";
-
-const useStyles = makeStyles({
-  app: {
-    display: "flex",
-    textAlign: "center",
-  },
-});
+import MasksList from "../MasksList";
 
 function App() {
-  const classes = useStyles();
   const [users, setUsers] = useState([]);
 
   const fetchUsers = () => {
@@ -21,6 +13,9 @@ function App() {
       })
       .then((data) => {
         setUsers(data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -29,9 +24,13 @@ function App() {
   }, []);
 
   return (
-    <div className={classes.app}>
-      <Main fetchUsers={fetchUsers} users={users} />
-    </div>
+    <main>
+      {users.map((user) => (
+        <Card key={user.uuid}>
+          <MasksList user={user} />
+        </Card>
+      ))}
+    </main>
   );
 }
 
