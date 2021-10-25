@@ -89,6 +89,20 @@ app.get("/users", async (req, res) => {
   }
 });
 
+// get all users
+app.get("/users/:uuid", async (req, res) => {
+  try {
+    const { uuid } = req.params;
+
+    const user = await pool.query("Select * FROM users WHERE uuid = $1", [
+      uuid,
+    ]);
+    res.json(user.rows[0]);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
 // create user
 app.post("/users", async (req, res) => {
   try {

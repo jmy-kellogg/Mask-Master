@@ -1,36 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { Card } from "@mui/material";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import MasksList from "../MasksList";
+import Login from "../Login";
 
 function App() {
-  const [users, setUsers] = useState([]);
-
-  const fetchUsers = () => {
-    fetch("http://localhost:5000/users")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setUsers(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  const [user, setUser] = useState({});
 
   return (
-    <main>
-      {users.map((user) => (
-        <Card key={user.uuid}>
+    <Router>
+      <Switch>
+        <Route path="/login">
+          <Login onSetUser={setUser} />
+        </Route>
+        <Route path="/">
           <MasksList user={user} />
-        </Card>
-      ))}
-    </main>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
