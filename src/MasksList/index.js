@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Button,
-  Grid,
   Table,
   TableBody,
   TableCell,
@@ -41,38 +40,13 @@ const MaskList = (props) => {
   };
 
   useEffect(() => {
-    fetchMaskList();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    if (props.user.uuid) {
+      fetchMaskList();
+    }
+  }, [props.user.uuid]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <React.Fragment>
-      <Grid container justifyContent="space-between" alignItems="center">
-        <Grid item>
-          <h1>{props.user.name}</h1>
-        </Grid>
-        <Grid item>
-          <form onSubmit={handleSubmit}>
-            <TextField
-              required
-              id="mask-name-input"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              label="New Mask's Name"
-              size="small"
-            />
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              type="submit"
-            >
-              Add Mask
-            </Button>
-          </form>
-        </Grid>
-      </Grid>
-
       <Table aria-label="simple table" size="small">
         <TableHead>
           <TableRow>
@@ -89,6 +63,21 @@ const MaskList = (props) => {
           ))}
         </TableBody>
       </Table>
+
+      <form onSubmit={handleSubmit}>
+        <TextField
+          required
+          id="mask-name-input"
+          name="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          label="New Mask's Name"
+          size="small"
+        />
+        <Button variant="contained" color="primary" size="small" type="submit">
+          Add Mask
+        </Button>
+      </form>
     </React.Fragment>
   );
 };

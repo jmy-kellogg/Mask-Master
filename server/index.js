@@ -14,7 +14,7 @@ app.post("/masks", async (req, res) => {
   try {
     const { name, userUuid } = req.body;
     const newMask = await pool.query(
-      "INSERT INTO masks(name, user_uuid) VALUES ($1, $2)RETURNING *",
+      "INSERT INTO masks(name, user_uuid) VALUES ($1, $2) RETURNING *",
       [name, userUuid]
     );
     res.json(newMask.rows[0]);
@@ -79,25 +79,17 @@ app.delete("/masks/:uuid", async (req, res) => {
   }
 });
 
-// get all users
-app.get("/users", async (req, res) => {
+// get user info
+app.get("/users/:sub", async (req, res) => {
   try {
-    const allMasks = await pool.query(`SELECT * FROM users`);
-    res.json(allMasks.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
+    const { sub } = req.params;
+    const user = await pool.query("Select * FROM users WHERE sub = $1", [sub]);
 
-// get all users
-app.get("/users/:uuid", async (req, res) => {
-  try {
-    const { uuid } = req.params;
-
-    const user = await pool.query("Select * FROM users WHERE uuid = $1", [
-      uuid,
-    ]);
-    res.json(user.rows[0]);
+    if (user.rowCount === 0) {
+      res.status(204).send();
+    } else {
+      res.json(user.rows[0]);
+    }
   } catch (error) {
     console.error(error.message);
   }
@@ -106,10 +98,10 @@ app.get("/users/:uuid", async (req, res) => {
 // create user
 app.post("/users", async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, sub } = req.body;
     const newPerson = await pool.query(
-      "INSERT INTO users (name) VALUES ($1)RETURNING *",
-      [name]
+      "INSERT INTO users (name, sub) VALUES ($1, $2) RETURNING *",
+      [name, sub]
     );
     res.json(newPerson.rows[0]);
   } catch (error) {
