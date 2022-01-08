@@ -5,14 +5,20 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const Mask = (props) => {
-  const [mask, setMask] = useState(props.mask);
-
-  const lastUsed = mask.lastUsed && moment(mask.lastUsed);
-  const nextTimeToUse = moment(mask.lastUsed).add(5, "days");
-  const isExpired = parseInt(mask.timesUsed) > 4;
+  const lastUsed = props.mask.lastUsed && moment(props.mask.lastUsed);
+  const nextTimeToUse = moment(props.mask.lastUsed).add(5, "days");
+  const isExpired = parseInt(props.mask.timesUsed) > 4;
   const isDirty = moment()
     .startOf("day")
     .isBefore(nextTimeToUse.startOf("day"));
+
+  const [mask, setMask] = useState({
+    ...props.mask,
+    nextTimeToUse,
+    lastUsed,
+    isExpired,
+    isDirty,
+  });
 
   const markAsUsed = () => {
     const newCount = parseInt(mask.timesUsed || 0) + 1;
@@ -45,29 +51,29 @@ const Mask = (props) => {
   };
 
   return (
-    <TableRow key={mask.uuid}>
+    <TableRow key={mask.uuid} onClick={() => props.handleRowClick(mask)}>
       <TableCell component="th" scope="row">
         {mask.name}
       </TableCell>
       <TableCell align="right">{mask.timesUsed}</TableCell>
-      <TableCell align="right">
+      {/*<TableCell align="right">
         {lastUsed && lastUsed.format("MMM DD")}
+      </TableCell>*/}
+      <TableCell align="right">
+        {mask.lastUsed && nextTimeToUse.format("MMM DD")}
       </TableCell>
       <TableCell align="right">
-        {lastUsed && nextTimeToUse.format("MMM DD")}
-      </TableCell>
-      <TableCell align="right">
-        {isExpired ? (
+        {mask.isExpired ? (
           <IconButton
             onClick={() => handleDelete(mask.uuid)}
             aria-label="delete"
-            color={isExpired ? "secondary" : "primary"}
+            color={mask.isExpired ? "secondary" : "primary"}
           >
             <DeleteIcon />
           </IconButton>
         ) : (
           <IconButton
-            disabled={isDirty}
+            disabled={mask.isDirty}
             onClick={markAsUsed}
             aria-label="add"
             color="primary"

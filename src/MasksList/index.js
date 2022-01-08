@@ -7,6 +7,10 @@ import {
   TableHead,
   TableRow,
   TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
 } from "@mui/material";
 
 import Mask from "../Mask";
@@ -14,6 +18,7 @@ import Mask from "../Mask";
 const MaskList = (props) => {
   const [masks, setMasks] = useState([]);
   const [name, setName] = useState("");
+  const [maskDetails, setMaskDetails] = useState({});
 
   const fetchMaskList = () => {
     fetch(`http://localhost:5000/masks?user=${props.user.uuid}`)
@@ -52,14 +57,19 @@ const MaskList = (props) => {
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell align="right">Use Count</TableCell>
-            <TableCell align="right">Last time Used</TableCell>
+            {/*<TableCell align="right">Last time Used</TableCell>*/}
             <TableCell align="right">Next Use</TableCell>
             <TableCell align="right">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {masks.map((mask) => (
-            <Mask key={mask.uuid} mask={mask} fetchMaskList={fetchMaskList} />
+            <Mask
+              key={mask.uuid}
+              mask={mask}
+              fetchMaskList={fetchMaskList}
+              handleRowClick={setMaskDetails}
+            />
           ))}
         </TableBody>
       </Table>
@@ -78,6 +88,19 @@ const MaskList = (props) => {
           Add Mask
         </Button>
       </form>
+
+      <Dialog open={!!maskDetails.uuid} onClose={() => setMaskDetails({})}>
+        <DialogTitle>Edit Mask Details</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            {maskDetails.name}
+            {maskDetails.isExpired}
+            {maskDetails.nextTimeToUse &&
+              maskDetails.nextTimeToUse.format("MMM DD")}
+            {maskDetails.lastUsed && maskDetails.lastUsed.format("MMM DD")}
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
     </React.Fragment>
   );
 };
